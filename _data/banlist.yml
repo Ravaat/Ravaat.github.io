@@ -1,0 +1,19 @@
+cards:
+
+  - name: "Black Lotus"
+    scryfall_id: "c1a8a0e2-..."
+    status: "banned"
+    date_banned: "2026-01-01"
+    reason: "This card is used as an example."
+
+  - name: "Ancestral Recall"
+    scryfall_id: "..."
+    status: "banned"
+    date_banned: "2026-01-01"
+    reason: "This card is used as an example."
+
+  - name: "Time Walk"
+    scryfall_id: "..."
+    status: "banned"
+    date_banned: "2026-01-01"
+    reason: "This card is used as an example."
