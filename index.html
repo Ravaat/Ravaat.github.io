@@ -1,0 +1,62 @@
+---
+layout: default
+title: Banlist
+---
+
+<section class="hero">
+
+  <div class="container">
+
+    <p class="eyebrow">
+      Official Banlist
+    </p>
+
+    <h1>
+      {{ site.title }}
+    </h1>
+
+    <p class="hero-description">
+      {{ site.description }}
+    </p>
+
+  </div>
+
+</section>
+
+
+<section class="banlist">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <div>
+        <p class="eyebrow">
+          Current Banlist
+        </p>
+
+        <h2>
+          Banned Cards
+        </h2>
+      </div>
+
+      <p class="card-count">
+        {{ site.data.banlist.cards.size }} cards
+      </p>
+
+    </div>
+
+
+    <div class="card-grid">
+
+      {% for card in site.data.banlist.cards %}
+
+        {% include card.html card=card %}
+
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+</section>
