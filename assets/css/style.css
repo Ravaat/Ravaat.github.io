@@ -1,266 +1,55 @@
-* {
-  box-sizing: border-box;
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll("[data-card-name]");
 
-html {
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  cards.forEach((cardElement, index) => {
+    const cardName = cardElement.dataset.cardName;
 
-  background: #111;
-  color: #eee;
-}
-
-body {
-  margin: 0;
-}
-
-a {
-  color: inherit;
-}
-
-.container {
-  width: min(1200px, calc(100% - 40px));
-  margin: 0 auto;
-}
+    /*
+     * Scryfall asks clients to avoid making huge bursts of requests.
+     * Staggering requests slightly keeps the page friendly to the API.
+     */
+    setTimeout(() => {
+      loadCard(cardElement, cardName);
+    }, index * 100);
+  });
+});
 
 
-/* Header */
+async function loadCard(cardElement, cardName) {
+  const image = cardElement.querySelector("[data-card-image]");
+  const links = cardElement.querySelectorAll("[data-scryfall-link]");
+  const loading = cardElement.querySelector(".card-loading");
 
-.site-header {
-  border-bottom: 1px solid #333;
-  background: #151515;
-}
+  const apiUrl =
+    "https://api.scryfall.com/cards/named?exact=" +
+    encodeURIComponent(cardName);
 
-.site-header .container {
-  min-height: 70px;
+  try {
+    const response = await fetch(apiUrl);
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-}
+    if (!response.ok) {
+      throw new Error("Scryfall request failed");
+    }
 
-.site-title {
-  font-size: 1.25rem;
-  font-weight: 800;
-  text-decoration: none;
-}
+    const card = await response.json();
 
-.site-nav {
-  display: flex;
-  gap: 24px;
-}
+    image.src = card.image_uris.normal;
+    image.alt = card.name;
 
-.site-nav a {
-  text-decoration: none;
-  color: #bbb;
-}
+    links.forEach((link) => {
+      link.href = card.scryfall_uri;
+    });
 
-.site-nav a:hover {
-  color: white;
-}
+    image.addEventListener("load", () => {
+      loading.remove();
+    });
 
-
-/* Hero */
-
-.hero {
-  padding: 90px 0 70px;
-  background: #181818;
-}
-
-.eyebrow {
-  margin: 0 0 10px;
-
-  font-size: 0.8rem;
-  font-weight: 700;
-
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-
-  color: #999;
-}
-
-.hero h1 {
-  margin: 0;
-
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  line-height: 0.95;
-}
-
-.hero-description {
-  max-width: 650px;
-
-  margin-top: 25px;
-
-  font-size: 1.2rem;
-  line-height: 1.6;
-
-  color: #bbb;
-}
-
-
-/* Banlist */
-
-.banlist {
-  padding: 70px 0;
-}
-
-.section-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-
-  margin-bottom: 35px;
-}
-
-.section-heading h2 {
-  margin: 0;
-
-  font-size: 2rem;
-}
-
-.card-count {
-  color: #888;
-}
-
-
-/* Card grid */
-
-.card-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(
-      auto-fill,
-      minmax(220px, 1fr)
+  } catch (error) {
+    console.error(
+      `Could not load Scryfall data for ${cardName}:`,
+      error
     );
 
-  gap: 30px;
-}
-
-
-/* Card */
-
-.card {
-  overflow: hidden;
-
-  border-radius: 12px;
-
-  background: #1b1b1b;
-
-  border: 1px solid #303030;
-
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-
-  border-color: #666;
-}
-
-.card-image {
-  display: block;
-
-  width: 100%;
-  height: auto;
-}
-
-.card-info {
-  padding: 18px;
-}
-
-.card-name {
-  margin: 0;
-
-  font-size: 1.1rem;
-}
-
-.card-date {
-  margin: 7px 0;
-
-  font-size: 0.85rem;
-
-  color: #888;
-}
-
-.card-reason {
-  margin: 15px 0;
-
-  color: #bbb;
-
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-.card-link {
-  display: inline-block;
-
-  margin-top: 5px;
-
-  font-size: 0.9rem;
-  font-weight: 600;
-
-  text-decoration: none;
-}
-
-
-/* Footer */
-
-.site-footer {
-  padding: 40px 0;
-
-  border-top: 1px solid #333;
-
-  color: #777;
-
-  font-size: 0.8rem;
-}
-
-
-/* Mobile */
-
-@media (max-width: 650px) {
-
-  .site-header .container {
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    padding: 20px 0;
+    loading.textContent = "Card image unavailable";
   }
-
-  .site-nav {
-    gap: 16px;
-  }
-
-  .hero {
-    padding: 60px 0 50px;
-  }
-
-  .section-heading {
-    align-items: flex-start;
-
-    flex-direction: column;
-
-    gap: 10px;
-  }
-
-  .card-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
-    gap: 15px;
-  }
-
-  .card-info {
-    padding: 12px;
-  }
-
 }
