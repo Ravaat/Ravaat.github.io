@@ -4,10 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   cards.forEach((cardElement, index) => {
     const cardName = cardElement.dataset.cardName;
 
-    /*
-     * Scryfall asks clients to avoid making huge bursts of requests.
-     * Staggering requests slightly keeps the page friendly to the API.
-     */
     setTimeout(() => {
       loadCard(cardElement, cardName);
     }, index * 100);
@@ -28,13 +24,41 @@ async function loadCard(cardElement, cardName) {
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
-      throw new Error("Scryfall request failed");
+      throw new Error(`Scryfall returned ${response.status}`);
     }
 
     const card = await response.json();
 
-    image.src = card.image_uris.normal;
+    /*
+     * Scryfall normally provides image_uris for regular cards.
+     * Some layouts, such as double-faced cards, store the image
+     * on the individual card faces instead.
+     */
+
+    let imageUrl = null;
+
+    if (card.image_uris) {
+      imageUrl = card.image_uris.normal;
+    } else if (
+      card.card_faces &&
+      card.card_faces[0] &&
+      card.card_faces[0].image_uris
+    ) {
+      imageUrl = card.card_faces[0].image_uris.normal;
+    }
+
+    if (!imageUrl) {
+      throw new Error("No card image was provided by Scryfall");
+    }
+
+    image.src = imageUrl;
+
     image.alt = card.name;
+
+    /*
+     * Use Scryfall's canonical card URL rather than
+     * constructing one ourselves.
+     */
 
     links.forEach((link) => {
       link.href = card.scryfall_uri;
@@ -44,7 +68,12 @@ async function loadCard(cardElement, cardName) {
       loading.remove();
     });
 
+    image.addEventListener("error", () => {
+      loading.textContent = "Unable to load card image";
+    });
+
   } catch (error) {
+
     console.error(
       `Could not load Scryfall data for ${cardName}:`,
       error
