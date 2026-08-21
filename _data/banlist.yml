@@ -1,49 +1,288 @@
 cards:
   - name: "Ancient Den"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Archon of Cruelty"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Atraxa, Grand Unifier"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Barrowgoyf"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Channel"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Chrome Mox"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Darkmoss Bridge"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Demonic Tutor"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Drossforge Bridge"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Enlightened Tutor"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Goldmire Bridge"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Great Furnace"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Hogaak, Arisen Necropolis"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Imperial Seal"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Kappa Cannoneer"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Kozilek's Command"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Mana Crypt"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Mana Vault"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Mental Misstep"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Mistvault Bridge"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Mox Amber"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Mox Opal"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Mystical Tutor"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Nethergoyf"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Ocelot Pride"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Oko, Thief of Crowns"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Personal Tutor"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Phlage, Titan of Fire's Fury"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Planar Nexus"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Razortide Bridge"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Rustvale Bridge"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Seat of the Synod"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Silverbluff Bridge"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Skullclamp"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Slagwoods Bridge"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Sol Ring"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Sowing Mycospawn"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Sylvan Tutor"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Tanglepool Bridge"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Thornglint Bridge"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Time Sieve"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Tree of Tales"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Uro, Titan of Nature's Wrath"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Urza's Saga"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Vampiric Tutor"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Vault of Whispers"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Worldly Tutor"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
+
   - name: "Wrath of the Skies"
+    status: "banned"
+    date_banned: null
+    reason: null
+    typologies: []
