@@ -1,0 +1,47 @@
+<article class="card">
+
+  <a
+    href="https://scryfall.com/card/{{ card.scryfall_id }}"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+
+    <img
+      class="card-image"
+      src="https://cards.scryfall.io/normal/front/{{ card.scryfall_id }}.jpg"
+      alt="{{ card.name }}"
+      loading="lazy"
+    >
+
+  </a>
+
+  <div class="card-info">
+
+    <h2 class="card-name">
+      {{ card.name }}
+    </h2>
+
+    {% if card.date_banned %}
+      <p class="card-date">
+        Banned {{ card.date_banned }}
+      </p>
+    {% endif %}
+
+    {% if card.reason %}
+      <p class="card-reason">
+        {{ card.reason }}
+      </p>
+    {% endif %}
+
+    <a
+      class="card-link"
+      href="https://scryfall.com/card/{{ card.scryfall_id }}"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      View on Scryfall →
+    </a>
+
+  </div>
+
+</article>
