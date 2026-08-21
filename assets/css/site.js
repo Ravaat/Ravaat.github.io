@@ -1,12 +1,12 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
   const cards = document.querySelectorAll("[data-card-name]");
 
-  cards.forEach((cardElement, index) => {
+  cards.forEach(function (cardElement, index) {
     const cardName = cardElement.dataset.cardName;
 
-    setTimeout(() => {
+    setTimeout(function () {
       loadCard(cardElement, cardName);
-    }, index * 100);
+    }, index * 150);
   });
 });
 
@@ -24,16 +24,12 @@ async function loadCard(cardElement, cardName) {
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
-      throw new Error(`Scryfall returned ${response.status}`);
+      throw new Error(
+        "Scryfall returned HTTP " + response.status
+      );
     }
 
     const card = await response.json();
-
-    /*
-     * Scryfall normally provides image_uris for regular cards.
-     * Some layouts, such as double-faced cards, store the image
-     * on the individual card faces instead.
-     */
 
     let imageUrl = null;
 
@@ -48,37 +44,50 @@ async function loadCard(cardElement, cardName) {
     }
 
     if (!imageUrl) {
-      throw new Error("No card image was provided by Scryfall");
+      throw new Error("No image URL found");
     }
 
+    /*
+     * Set the image before changing anything else.
+     */
     image.src = imageUrl;
 
-    image.alt = card.name;
+    image.style.display = "block";
+    image.style.visibility = "visible";
+    image.style.opacity = "1";
 
     /*
-     * Use Scryfall's canonical card URL rather than
-     * constructing one ourselves.
+     * Use Scryfall's actual card URL.
      */
-
-    links.forEach((link) => {
+    links.forEach(function (link) {
       link.href = card.scryfall_uri;
     });
 
-    image.addEventListener("load", () => {
-      loading.remove();
-    });
+    /*
+     * Hide the loading message once the image is ready.
+     */
+    image.onload = function () {
+      if (loading) {
+        loading.style.display = "none";
+      }
+    };
 
-    image.addEventListener("error", () => {
-      loading.textContent = "Unable to load card image";
-    });
+    image.onerror = function () {
+      if (loading) {
+        loading.textContent = "Unable to load card image";
+      }
+    };
 
   } catch (error) {
 
     console.error(
-      `Could not load Scryfall data for ${cardName}:`,
+      "Could not load card:",
+      cardName,
       error
     );
 
-    loading.textContent = "Card image unavailable";
+    if (loading) {
+      loading.textContent = "Card image unavailable";
+    }
   }
 }
