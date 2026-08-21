@@ -1,17 +1,27 @@
-<article class="card">
+<article class="card" data-card-name="{{ card.name | escape }}">
 
   <a
-    href="https://scryfall.com/card/{{ card.scryfall_id }}"
+    class="card-image-link"
+    data-scryfall-link
+    href="https://scryfall.com/search?q=%21{{ card.name | uri_escape }}"
     target="_blank"
     rel="noopener noreferrer"
   >
 
-    <img
-      class="card-image"
-      src="https://cards.scryfall.io/normal/front/{{ card.scryfall_id }}.jpg"
-      alt="{{ card.name }}"
-      loading="lazy"
-    >
+    <div class="card-image-wrapper">
+
+      <div class="card-loading">
+        Loading card...
+      </div>
+
+      <img
+        class="card-image"
+        data-card-image
+        alt="{{ card.name | escape }}"
+        loading="lazy"
+      >
+
+    </div>
 
   </a>
 
@@ -21,21 +31,14 @@
       {{ card.name }}
     </h2>
 
-    {% if card.date_banned %}
-      <p class="card-date">
-        Banned {{ card.date_banned }}
-      </p>
-    {% endif %}
-
-    {% if card.reason %}
-      <p class="card-reason">
-        {{ card.reason }}
-      </p>
-    {% endif %}
+    <span class="card-status">
+      BANNED
+    </span>
 
     <a
       class="card-link"
-      href="https://scryfall.com/card/{{ card.scryfall_id }}"
+      data-scryfall-link
+      href="https://scryfall.com/search?q=%21{{ card.name | uri_escape }}"
       target="_blank"
       rel="noopener noreferrer"
     >
