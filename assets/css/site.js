@@ -1,93 +1,81 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const cards = document.querySelectorAll("[data-card-name]");
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".card");
 
-  cards.forEach(function (cardElement, index) {
+  cards.forEach((cardElement) => {
     const cardName = cardElement.dataset.cardName;
 
-    setTimeout(function () {
-      loadCard(cardElement, cardName);
-    }, index * 150);
+    loadCard(cardElement, cardName);
   });
 });
 
 
 async function loadCard(cardElement, cardName) {
-  const image = cardElement.querySelector("[data-card-image]");
-  const links = cardElement.querySelectorAll("[data-scryfall-link]");
-  const loading = cardElement.querySelector(".card-loading");
 
-  const apiUrl =
-    "https://api.scryfall.com/cards/named?exact=" +
-    encodeURIComponent(cardName);
+  const image = cardElement.querySelector("[data-card-image]");
+  const loading = cardElement.querySelector(".card-loading");
+  const links = cardElement.querySelectorAll("[data-scryfall-link]");
 
   try {
-    const response = await fetch(apiUrl);
+
+    const url =
+      "https://api.scryfall.com/cards/named?exact=" +
+      encodeURIComponent(cardName);
+
+    console.log("Requesting Scryfall:", url);
+
+    const response = await fetch(url);
+
+    console.log(
+      "Scryfall response:",
+      cardName,
+      response.status
+    );
 
     if (!response.ok) {
       throw new Error(
-        "Scryfall returned HTTP " + response.status
+        `Scryfall returned HTTP ${response.status}`
       );
     }
 
     const card = await response.json();
 
-    let imageUrl = null;
+    console.log("Scryfall card:", card);
 
-    if (card.image_uris) {
-      imageUrl = card.image_uris.normal;
-    } else if (
-      card.card_faces &&
-      card.card_faces[0] &&
-      card.card_faces[0].image_uris
-    ) {
-      imageUrl = card.card_faces[0].image_uris.normal;
-    }
-
-    if (!imageUrl) {
-      throw new Error("No image URL found");
+    if (!card.image_uris || !card.image_uris.normal) {
+      throw new Error("Scryfall did not provide an image URL");
     }
 
     /*
-     * Set the image before changing anything else.
+     * Set the actual card image.
      */
-    image.src = imageUrl;
+    image.src = card.image_uris.normal;
 
-    image.style.display = "block";
-    image.style.visibility = "visible";
-    image.style.opacity = "1";
+    image.alt = card.name;
 
     /*
-     * Use Scryfall's actual card URL.
+     * Replace the temporary search links
+     * with the actual Scryfall card URL.
      */
-    links.forEach(function (link) {
+    links.forEach((link) => {
       link.href = card.scryfall_uri;
     });
 
     /*
-     * Hide the loading message once the image is ready.
+     * Remove the loading message.
      */
-    image.onload = function () {
-      if (loading) {
-        loading.style.display = "none";
-      }
-    };
-
-    image.onerror = function () {
-      if (loading) {
-        loading.textContent = "Unable to load card image";
-      }
-    };
+    loading.style.display = "none";
 
   } catch (error) {
 
     console.error(
-      "Could not load card:",
+      "Scryfall card loading failed:",
       cardName,
       error
     );
 
-    if (loading) {
-      loading.textContent = "Card image unavailable";
-    }
+    loading.textContent =
+      "Unable to load card";
+
+    loading.style.color = "#ff7777";
   }
 }
