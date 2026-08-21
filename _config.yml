@@ -1,3 +1,13 @@
-theme: jekyll-theme-minimal
-title: Tinkerer Format (a.k.a. THE FORMAT)
-description: Bookmark this to have access to the updated banlist and keep an eye on format updates!
+title: "Tinkerer format"
+description: "The official Tinkerer banlist"
+url: "Ravaat.github.io"
+baseurl: "Ravaat.github.io"
+
+markdown: kramdown
+
+plugins: []
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
