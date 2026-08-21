@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    {% if page.title %}
+      {{ page.title }} | {{ site.title }}
+    {% else %}
+      {{ site.title }}
+    {% endif %}
+  </title>
+
+  <meta
+    name="description"
+    content="{{ site.description }}"
+  >
+
+  <link
+    rel="stylesheet"
+    href="{{ '/assets/css/style.css' | relative_url }}"
+  >
+</head>
+
+<body>
+
+  <header class="site-header">
+
+    <div class="container">
+
+      <a
+        class="site-title"
+        href="{{ '/' | relative_url }}"
+      >
+        {{ site.title }}
+      </a>
+
+      <nav class="site-nav">
+        <a href="{{ '/' | relative_url }}">
+          Banlist
+        </a>
+
+        <a href="{{ '/history/' | relative_url }}">
+          History
+        </a>
+
+        <a href="{{ '/about/' | relative_url }}">
+          About
+        </a>
+      </nav>
+
+    </div>
+
+  </header>
+
+
+  <main>
+
+    {{ content }}
+
+  </main>
+
+
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <p>
+        {{ site.title }}
+      </p>
+
+      <p>
+        Magic: The Gathering is a trademark of Wizards of the Coast.
+      </p>
+
+    </div>
+
+  </footer>
+
+</body>
+</html>
