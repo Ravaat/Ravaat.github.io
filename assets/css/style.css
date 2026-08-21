@@ -1,55 +1,337 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const cards = document.querySelectorAll("[data-card-name]");
+* {
+  box-sizing: border-box;
+}
 
-  cards.forEach((cardElement, index) => {
-    const cardName = cardElement.dataset.cardName;
+html {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 
-    /*
-     * Scryfall asks clients to avoid making huge bursts of requests.
-     * Staggering requests slightly keeps the page friendly to the API.
-     */
-    setTimeout(() => {
-      loadCard(cardElement, cardName);
-    }, index * 100);
-  });
-});
+  background: #101010;
+  color: #eee;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+.container {
+  width: min(1400px, calc(100% - 40px));
+  margin: 0 auto;
+}
 
 
-async function loadCard(cardElement, cardName) {
-  const image = cardElement.querySelector("[data-card-image]");
-  const links = cardElement.querySelectorAll("[data-scryfall-link]");
-  const loading = cardElement.querySelector(".card-loading");
+/* ================================
+   Header
+   ================================ */
 
-  const apiUrl =
-    "https://api.scryfall.com/cards/named?exact=" +
-    encodeURIComponent(cardName);
+.site-header {
+  background: #151515;
+  border-bottom: 1px solid #303030;
+}
 
-  try {
-    const response = await fetch(apiUrl);
+.site-header .container {
+  min-height: 70px;
 
-    if (!response.ok) {
-      throw new Error("Scryfall request failed");
-    }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    const card = await response.json();
+  gap: 30px;
+}
 
-    image.src = card.image_uris.normal;
-    image.alt = card.name;
+.site-title {
+  color: white;
 
-    links.forEach((link) => {
-      link.href = card.scryfall_uri;
-    });
+  font-size: 1.25rem;
+  font-weight: 800;
 
-    image.addEventListener("load", () => {
-      loading.remove();
-    });
+  text-decoration: none;
+}
 
-  } catch (error) {
-    console.error(
-      `Could not load Scryfall data for ${cardName}:`,
-      error
+.site-nav {
+  display: flex;
+  gap: 24px;
+}
+
+.site-nav a {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  color: white;
+}
+
+
+/* ================================
+   Hero
+   ================================ */
+
+.hero {
+  padding: 90px 0 70px;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      #292929,
+      #181818 45%,
+      #111 100%
+    );
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+
+  color: #999;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: 0.95;
+}
+
+.hero-description {
+  max-width: 650px;
+
+  margin-top: 25px;
+
+  color: #bbb;
+
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+
+/* ================================
+   Banlist
+   ================================ */
+
+.banlist {
+  padding: 70px 0;
+}
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+
+  margin-bottom: 40px;
+}
+
+.section-heading h2 {
+  margin: 0;
+
+  font-size: 2rem;
+}
+
+.card-count {
+  color: #888;
+}
+
+
+/* ================================
+   Card Grid
+   ================================ */
+
+.card-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fill,
+      minmax(220px, 1fr)
     );
 
-    loading.textContent = "Card image unavailable";
+  gap: 28px;
+}
+
+
+/* ================================
+   Cards
+   ================================ */
+
+.card {
+  overflow: hidden;
+
+  border: 1px solid #303030;
+  border-radius: 14px;
+
+  background: #181818;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+
+  border-color: #555;
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.45);
+}
+
+
+/* Card image */
+
+.card-image-link {
+  display: block;
+
+  background: #0c0c0c;
+}
+
+.card-image-wrapper {
+  position: relative;
+
+  aspect-ratio: 488 / 680;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.card-loading {
+  position: absolute;
+
+  color: #777;
+
+  font-size: 0.85rem;
+}
+
+
+/* Card information */
+
+.card-info {
+  padding: 16px;
+}
+
+.card-name {
+  margin: 0 0 8px;
+
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.card-status {
+  display: inline-block;
+
+  padding: 4px 8px;
+
+  border-radius: 5px;
+
+  background: #522020;
+
+  color: #ffb0b0;
+
+  font-size: 0.65rem;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+}
+
+.card-link {
+  display: block;
+
+  margin-top: 14px;
+
+  color: #aaa;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+.card-link:hover {
+  color: white;
+}
+
+
+/* ================================
+   Footer
+   ================================ */
+
+.site-footer {
+  padding: 40px 0;
+
+  border-top: 1px solid #303030;
+
+  color: #777;
+
+  font-size: 0.8rem;
+}
+
+
+/* ================================
+   Mobile
+   ================================ */
+
+@media (max-width: 650px) {
+
+  .site-header .container {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding: 20px 0;
   }
+
+  .site-nav {
+    gap: 16px;
+  }
+
+  .hero {
+    padding: 60px 0 50px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  .card-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+  }
+
+  .card-info {
+    padding: 12px;
+  }
+
+  .card-name {
+    font-size: 0.9rem;
+  }
+
 }
