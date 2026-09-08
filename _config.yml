@@ -1,7 +1,7 @@
-title: "Tinkerer format"
-description: "The official Tinkerer banlist"
-url: "Ravaat.github.io"
-baseurl: "Ravaat.github.io"
+title: "Tinkerer"
+description: "A modern Magic: The Gathering format built around experimentation."
+url: "https://ravaat.github.io"
+baseurl: ""
 
 markdown: kramdown
 
