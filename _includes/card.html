@@ -1,50 +1,41 @@
-<article class="card" data-card-name="{{ card.name | escape }}">
-
+<article class="card" data-card-name="{{ card.name | escape }}" data-typologies="{{ card.typologies | join: '|' | escape }}">
   <a
     class="card-image-link"
     data-scryfall-link
     href="https://scryfall.com/search?q=%21%22{{ card.name | uri_escape }}%22"
     target="_blank"
     rel="noopener noreferrer"
+    aria-label="View {{ card.name }} on Scryfall"
   >
-
     <div class="card-image-wrapper">
-
-      <div class="card-loading">
-        Loading card...
-      </div>
-
-      <img
-        class="card-image"
-        data-card-image
-        alt="{{ card.name | escape }}"
-        loading="lazy"
-      >
-
+      <div class="card-loading">Loading card</div>
+      <img class="card-image" data-card-image alt="{{ card.name | escape }}" loading="lazy">
     </div>
-
   </a>
 
   <div class="card-info">
+    <div class="card-title-row">
+      <h2 class="card-name">{{ card.name }}</h2>
+      <span class="card-status">BANNED</span>
+    </div>
 
-    <h2 class="card-name">
-      {{ card.name }}
-    </h2>
+    {% if card.date_banned or card.reason %}
+      <div class="card-meta">
+        {% if card.date_banned %}<span>{{ card.date_banned }}</span>{% endif %}
+        {% if card.reason %}<span>{{ card.reason }}</span>{% endif %}
+      </div>
+    {% endif %}
 
-    <span class="card-status">
-      BANNED
-    </span>
+    {% if card.typologies.size > 0 %}
+      <div class="card-tags">
+        {% for typology in card.typologies %}
+          <span class="tag">{{ typology }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
 
-    <a
-      class="card-link"
-      data-scryfall-link
-      href="https://scryfall.com/search?q=%21%22{{ card.name | uri_escape }}%22"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      View on Scryfall →
+    <a class="card-link" data-scryfall-link href="https://scryfall.com/search?q=%21%22{{ card.name | uri_escape }}%22" target="_blank" rel="noopener noreferrer">
+      Scryfall <span>↗</span>
     </a>
-
   </div>
-
 </article>
