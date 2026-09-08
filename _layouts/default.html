@@ -2,85 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <title>{% if page.title %}{{ page.title }} — {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{{ site.description }}">
 
-  <title>
-    {% if page.title %}
-      {{ page.title }} | {{ site.title }}
-    {% else %}
-      {{ site.title }}
-    {% endif %}
-  </title>
-
-  <meta
-    name="description"
-    content="{{ site.description }}"
-  >
-
-  <link
-    rel="stylesheet"
-    href="{{ '/assets/css/style.css' | relative_url }}"
-  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
 
 <body>
-
   <header class="site-header">
-
-    <div class="container">
-
-      <a
-        class="site-title"
-        href="{{ '/' | relative_url }}"
-      >
-        {{ site.title }}
+    <div class="container nav-shell">
+      <a class="brand" href="{{ '/' | relative_url }}" aria-label="Tinkerer home">
+        <span class="brand-mark">T</span>
+        <span class="brand-word">TINKERER</span>
       </a>
 
-      <nav class="site-nav">
-        <a href="{{ '/' | relative_url }}">
-          Banlist
-        </a>
-
-        <a href="{{ '/history/' | relative_url }}">
-          History
-        </a>
-
-        <a href="{{ '/about/' | relative_url }}">
-          About
-        </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="{{ '/' | relative_url }}">Home</a>
+        <a href="{{ '/#banlist' | relative_url }}">Banlist</a>
+        <a href="{{ '/history/' | relative_url }}">History</a>
+        <a href="{{ '/about/' | relative_url }}">About</a>
       </nav>
-
     </div>
-
   </header>
 
-
-  <main>
-
-    {{ content }}
-
-  </main>
-
+  <main>{{ content }}</main>
 
   <footer class="site-footer">
-
-    <div class="container">
-
-      <p>
-        {{ site.title }}
-      </p>
-
-      <p>
-        Magic: The Gathering is a trademark of Wizards of the Coast.
-      </p>
-
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-brand">TINKERER</div>
+        <p>A community format built around experimentation.</p>
+      </div>
+      <div class="footer-meta">
+        <p>Magic: The Gathering is a trademark of Wizards of the Coast.</p>
+      </div>
     </div>
-
   </footer>
-<script src="{{ '/assets/js/site.js' | relative_url }}"></script>
+
+  <script src="{{ '/assets/js/site.js' | relative_url }}"></script>
 </body>
 </html>
